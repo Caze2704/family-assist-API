@@ -7,7 +7,8 @@ module.exports = class FamilyController{
 
         static async register(req, res){
 
-            const { familyName, name, email, password } = req.body || {}
+            const { familyName, name, email: rawEmail, password } = req.body || {}
+            const email = String(rawEmail || '').trim().toLowerCase()
 
             if(!familyName || !name || !email || !password){
                 return res.status(422).json({message: "Preencha todos os campos!"})
@@ -59,7 +60,7 @@ module.exports = class FamilyController{
     static async getMyFamily(req, res){
 
         try {
-            const family = await Family.findByPk(req.user.FamilyId, {
+            const family = await Family.findByPk(req.user.familyId, {
                 include: {model: User, attributes: ['id', 'name', 'email', 'memberStatus']}
             })
 
