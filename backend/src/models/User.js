@@ -16,8 +16,8 @@ const User = sequelize.define('User', {
         allowNull: false
     },
     memberStatus: {
-        type: DataTypes.ENUM('admin', 'Adulto', 'Criança'),
-        defaultValue: 'Adulto'
+        type: DataTypes.ENUM('admin', 'adult', 'child'),
+        defaultValue: 'adult'
     }
 })
 

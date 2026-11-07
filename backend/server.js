@@ -1,8 +1,7 @@
-require('dotenv').config()
 const app = require('./src/app')
 const {sequelize} = require('./src/models')
 
-const port = process.env.DB_PORT
+const port = 3000
 
 async function start() {
     try {
@@ -14,7 +13,7 @@ async function start() {
 
         app.listen(port, () => console.log("Servidor on"))
     } catch (err) {
-        console.log(err)
+        console.error("ERRO:", err)
     }
 }
 
