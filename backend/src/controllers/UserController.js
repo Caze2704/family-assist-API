@@ -128,7 +128,7 @@ module.exports = class UserController{
             const data = {}
 
             if(name !== undefined){
-                const newName = String(name).trim()
+                const newName = String(name || '').trim()
                 if(!newName){
                     return res.status(422).json({message: "Nome inválido!"})
                 }
