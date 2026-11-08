@@ -188,5 +188,33 @@ module.exports = class UserController{
 
     static async deleteMember(req, res){
 
+        const {id} = req.params
+
+        try {
+            const user = await User.findOne({
+                where: { id, FamilyId: req.user.familyId}
+            })
+
+            if(!user){
+                return res.status(404).json({message: "Usuário não encontrado"})
+            }
+
+            if(user.memberStatus === 'admin'){
+                const admins = await User.count({
+                    where: { FamilyId: req.user.familyId, memberStatus: 'admin'}
+                })
+                if(admins <= 1){
+                    return res.status(422).json({message: "A família precisa ter pelo menos 1 administrador"})
+                }
+            }
+
+            await user.destroy()
+
+            return res.status(200).json({message: "Usuário removido com sucesso!"})
+
+        } catch (err) {
+            console.log(err)
+            return res.status(500).json({message: "Não foi possível completar a solicitação"})
+        }
     }
 }
