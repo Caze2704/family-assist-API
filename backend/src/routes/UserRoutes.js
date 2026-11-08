@@ -3,7 +3,7 @@ const UserController = require('../controllers/UserController')
 
 // middlewares
 
-const verifyToken = require('../middlewares/verfiyToken')
+const verifyToken = require('../middlewares/verifyToken')
 const isAdmin = require('../middlewares/isAdmin')
 
 router.post('/login', UserController.login)
