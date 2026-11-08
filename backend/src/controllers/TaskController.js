@@ -189,6 +189,24 @@ module.exports = class TaskController{
 
     static async delete(req, res){
 
+        const {id} = req.params
+
+        try {
+            const task = await Task.findOne({
+                where: {id, FamilyId: req.user.familyId}
+            })
+
+            if(!task){
+                return res.status(404).json({message: "Tarefa não encontrada"})
+            }
+
+            await task.destroy()
+
+            return res.status(200).json({message: "Tarefa excluída com sucesso!"})
+        } catch (err) {
+            console.log(err)
+            return res.status(500).json({message: "Não foi possível completar a solicitação"})
+        }
     }
 
 }
