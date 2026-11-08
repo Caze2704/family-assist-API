@@ -3,7 +3,7 @@ const FamilyController = require('../controllers/FamilyController')
 
 // middlewares
 
-const verifyToken = require('../middlewares/verfiyToken')
+const verifyToken = require('../middlewares/verifyToken')
 
 router.get('/', verifyToken, FamilyController.getMyFamily)
 router.post('/', FamilyController.register)

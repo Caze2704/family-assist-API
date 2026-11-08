@@ -5,6 +5,7 @@ const app = express()
 
 const FamilyRoutes = require('./routes/FamilyRoutes')
 const UserRoutes = require('./routes/UserRoutes')
+const TaskRoutes = require('./routes/TaskRoutes')
 
 app.use(express.json())
 
@@ -12,5 +13,6 @@ app.use(express.json())
 
 app.use('/family', FamilyRoutes)
 app.use('/user', UserRoutes)
+app.use('/task', TaskRoutes)
 
 module.exports = app

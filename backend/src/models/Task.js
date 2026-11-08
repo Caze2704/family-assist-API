@@ -10,7 +10,7 @@ const Task = sequelize.define('Task', {
         type: DataTypes.TEXT,
         allowNull: true
     },
-    status: {
+    completed: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     }, 
