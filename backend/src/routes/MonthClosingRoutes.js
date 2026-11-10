@@ -9,5 +9,6 @@ const notChild = require('../middlewares/notChild')
 
 router.post('/', verifyToken, notChild, isAdmin, MonthClosingController.closeMonth)
 router.get('/', verifyToken, notChild, isAdmin, MonthClosingController.list)
+router.delete('/:id', verifyToken, notChild, isAdmin, MonthClosingController.delete)
 
 module.exports = router

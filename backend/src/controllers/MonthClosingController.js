@@ -96,4 +96,28 @@ module.exports = class MonthClosingController{
         }
     }
 
+    static async delete(req, res){
+
+        const {id} = req.params
+
+        try {
+            
+            const month = await MonthClosing.findOne({
+                where: {id, FamilyId: req.user.familyId}
+            })
+
+            if(!month){
+                return res.status(404).json({message: "Mês não encontrado!"})
+            }
+
+            await month.destroy()
+
+            return res.status(200).json({message: "Mês reaberto com sucesso!"})
+
+        } catch (err) {
+            console.log(err)
+            return res.status(500).json({message: "Não foi possível completar a solicitação"})
+        }
+    }
+
 }
