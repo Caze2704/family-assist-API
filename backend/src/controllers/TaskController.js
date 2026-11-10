@@ -1,4 +1,5 @@
-const {sequelize, Family, User, Task} = require('../models')
+const {User, Task} = require('../models')
+const { Op } = require('sequelize')
 
 module.exports = class TaskController{
 
@@ -95,9 +96,9 @@ module.exports = class TaskController{
         const { title , description, deadLine, completed, responsibleId } = req.body || {}
 
         if(req.user.memberStatus === 'child'){
-            const onlyCompleted = Object.keys(req.body).every(key => key === 'completed')
+            const onlyCompleted = Object.keys(req.body || {}).every(key => key === 'completed')
             if(!onlyCompleted){
-                return res.status(422).json({message: "Você só pode marcar tarefas como concluídas!"})
+                return res.status(403).json({message: "Você só pode marcar tarefas como concluídas!"})
             }
         }
 
@@ -123,7 +124,8 @@ module.exports = class TaskController{
                     where: {
                         title: newTitle,
                         FamilyId: req.user.familyId,
-                        completed: false
+                        completed: false,
+                        id: { [Op.ne]: task.id }
                     }
                 })
 
@@ -162,7 +164,7 @@ module.exports = class TaskController{
                     if(!user){
                         return res.status(404).json({message: "Usuário não encontrado"})
                     }
-                    data.responsibleId = user.id    
+                    data.ResponsibleId = user.id    
                 }
             }
 

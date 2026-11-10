@@ -1,4 +1,5 @@
-const {Family, User, Bill} = require('../models')
+const {Bill} = require('../models')
+const isMonthClosed = require('../helpers/isMonthClosed')
 
 module.exports = class BillController{
 
@@ -31,6 +32,10 @@ module.exports = class BillController{
         }
 
         try {
+            
+            if(await isMonthClosed(req.user.familyId, referenceMonth)){
+                return res.status(409).json({message: "Este mês está fechado!"})
+            }
             
             const bill = {
                 name, 
@@ -116,6 +121,10 @@ module.exports = class BillController{
                 return res.status(404).json({message: "Conta não encontrada."})
             }
 
+            if(await isMonthClosed(req.user.familyId, bill.referenceMonth)){
+                return res.status(409).json({message: "Este mês está fechado!"})
+            }
+
             if(rawName !== undefined){
                 const name = String(rawName || '').trim()
                 if(!name){
@@ -133,7 +142,7 @@ module.exports = class BillController{
 
             if(amount !== undefined){
                 const value = Number(amount)
-                if(!Number.isFinite(value)){
+                if(!Number.isFinite(value) || value <= 0){
                     return res.status(422).json({message: "Insira um valor válido!"})
                 }
                 data.amount = Math.round(value * 100) / 100
@@ -150,6 +159,7 @@ module.exports = class BillController{
                 if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(referenceMonth)){
                     return res.status(422).json({message: "Mês inválido! Use o formato AAAA-MM"})
                 }
+
                 data.referenceMonth = referenceMonth
             }
 
@@ -198,6 +208,10 @@ module.exports = class BillController{
 
             if(!bill){
                 return res.status(404).json({message: "Conta não encontrada!"})
+            }
+
+            if(await isMonthClosed(req.user.familyId, bill.referenceMonth)){
+                return res.status(409).json({message: "Este mês está fechado!"})
             }
 
             await bill.destroy()
