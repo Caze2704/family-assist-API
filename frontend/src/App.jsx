@@ -1,24 +1,31 @@
-import { useEffect, useState } from "react"
-import api from "./services/api"
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
+// pages
+import { Login } from './pages/Login/Login';
+import { CadastroFamilia } from './pages/CadastroFamilia/CadastroFamilia';
+import { Dashboard } from './pages/Dashboard/Dashboard';
+
+// layouts
+import { PrivateLayout } from './layouts/PrivateLayout';
 
 function App(){
-  const [status, setStatus] = useState('Testando conexão...')
-
-  useEffect(() => {
-    api.get('/user')
-    .then(() => setStatus('conectado!'))
-    .catch((err) => {
-      if(err.response){
-        setStatus(`Api respondeu com status ${err.response.status}`)
-      }else{
-        setStatus("Sem resposta da API (servidor off ou cors)")
-      }
-    })
-  }, [])
 
   return(
     <>
-      <h1>{status}</h1>
+      <BrowserRouter>
+        <Routes>
+        {/* Rotas Públicas (Sem NavBar e Footer) */}
+        <Route path="/" element={<Login />} />
+        <Route path="/Cadastro" element={<CadastroFamilia />} />
+        
+        {/* Rotas Privadas (Com NavBar e Footer) */}
+        <Route element={<PrivateLayout />}>
+          {/* Todas as rotas colocadas aqui dentro vão herdar a NavBar e o Footer automaticamente */}
+          <Route path="/Dashboard" element={<Dashboard />} />
+          {/* <Route path="/membros" element={<MembersList />} /> */}
+        </Route>
+      </Routes>
+    </BrowserRouter>
     </>
   )
 
