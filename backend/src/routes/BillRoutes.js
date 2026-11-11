@@ -3,7 +3,6 @@ const BillController = require('../controllers/BillController')
 
 // middlewares
 
-const isAdmin = require('../middlewares/isAdmin')
 const verifyToken = require('../middlewares/verifyToken')
 const notChild = require('../middlewares/notChild')
 

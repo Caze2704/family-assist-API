@@ -4,7 +4,6 @@ const TaskController = require('../controllers/TaskController')
 // middlewares
 
 const verifyToken = require('../middlewares/verifyToken')
-const isAdmin = require('../middlewares/isAdmin')
 const notChild = require('../middlewares/notChild')
 
 router.get('/', verifyToken, TaskController.list)

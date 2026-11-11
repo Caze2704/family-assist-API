@@ -1,8 +1,6 @@
 const bcrypt = require('bcrypt')
-const { sequelize, Family, User } = require('../models')
+const {User } = require('../models')
 
-const getToken = require('../helpers/getToken')
-const getUserByToken = require('../helpers/getUserByToken')
 const createToken = require('../helpers/createToken')
 
 module.exports = class UserController{
@@ -115,6 +113,10 @@ module.exports = class UserController{
         const {id} = req.params
         const {name, email: rawEmail, memberStatus} = req.body || {}
 
+        if(!/^\d+$/.test(id) || Number(id) > 2147483647){
+            return res.status(404).json({message: "Id inválido!"})
+        }
+
         try {
             
             const member = await User.findOne({
@@ -157,7 +159,7 @@ module.exports = class UserController{
                     const admins = await User.count({
                         where: { FamilyId: req.user.familyId, memberStatus: 'admin'}
                     })
-                    if(admins.length <= 1){
+                    if(admins <= 1){
                         return res.status(422).json({message: "A família precisa ter pelo menos um adminstrador!"})
                     }
                 }
@@ -189,6 +191,10 @@ module.exports = class UserController{
     static async deleteMember(req, res){
 
         const {id} = req.params
+
+        if(!/^\d+$/.test(id) || Number(id) > 2147483647){
+            return res.status(404).json({message: "Id inválido!"})
+        }
 
         try {
             const user = await User.findOne({
