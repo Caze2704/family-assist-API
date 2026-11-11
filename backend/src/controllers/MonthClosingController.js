@@ -82,7 +82,7 @@ module.exports = class MonthClosingController{
             })
 
             if(months.length <= 0 ){
-                return res.status(422).json({message: "Nenhum mês fechado!"})
+                return res.status(200).json({message: "Nenhum mês fechado!"})
             }
 
             return res.status(200).json({
@@ -99,6 +99,10 @@ module.exports = class MonthClosingController{
     static async delete(req, res){
 
         const {id} = req.params
+
+        if(!/^\d+$/.test(id) || Number(id) > 2147483647){
+            return res.status(404).json({message: "Id inválido!"})
+        }
 
         try {
             

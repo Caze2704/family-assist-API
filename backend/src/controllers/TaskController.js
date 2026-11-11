@@ -95,6 +95,10 @@ module.exports = class TaskController{
 
         const { title , description, deadLine, completed, responsibleId } = req.body || {}
 
+        if(!/^\d+$/.test(id) || Number(id) > 2147483647){
+            return res.status(404).json({message: "Id inválido!"})
+        }
+
         if(req.user.memberStatus === 'child'){
             const onlyCompleted = Object.keys(req.body || {}).every(key => key === 'completed')
             if(!onlyCompleted){
@@ -192,6 +196,10 @@ module.exports = class TaskController{
     static async delete(req, res){
 
         const {id} = req.params
+
+        if(!/^\d+$/.test(id) || Number(id) > 2147483647){
+            return res.status(404).json({message: "Id inválido!"})
+        }
 
         try {
             const task = await Task.findOne({

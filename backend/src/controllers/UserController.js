@@ -113,6 +113,10 @@ module.exports = class UserController{
         const {id} = req.params
         const {name, email: rawEmail, memberStatus} = req.body || {}
 
+        if(!/^\d+$/.test(id) || Number(id) > 2147483647){
+            return res.status(404).json({message: "Id inválido!"})
+        }
+
         try {
             
             const member = await User.findOne({
@@ -187,6 +191,10 @@ module.exports = class UserController{
     static async deleteMember(req, res){
 
         const {id} = req.params
+
+        if(!/^\d+$/.test(id) || Number(id) > 2147483647){
+            return res.status(404).json({message: "Id inválido!"})
+        }
 
         try {
             const user = await User.findOne({

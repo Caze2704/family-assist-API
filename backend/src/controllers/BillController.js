@@ -111,7 +111,11 @@ module.exports = class BillController{
 
         const data = {}
 
-        try {
+        if(!/^\d+$/.test(id) || Number(id) > 2147483647){
+            return res.status(404).json({message: "Id inválido!"})
+        }
+
+        try {            
             
             const bill = await Bill.findOne({
                 where: {id, FamilyId: req.user.familyId}
@@ -160,6 +164,10 @@ module.exports = class BillController{
                     return res.status(422).json({message: "Mês inválido! Use o formato AAAA-MM"})
                 }
 
+                if(await isMonthClosed(req.user.familyId, referenceMonth)){
+                    return res.status(409).json({message: "O mês de destino está fechado!"})
+                }
+
                 data.referenceMonth = referenceMonth
             }
 
@@ -199,6 +207,10 @@ module.exports = class BillController{
     static async delete(req, res){
 
         const {id} = req.params
+
+        if(!/^\d+$/.test(id) || Number(id) > 2147483647){
+            return res.status(404).json({message: "Id inválido!"})
+        }
         
         try {
             
