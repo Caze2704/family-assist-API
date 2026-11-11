@@ -11,6 +11,8 @@ const MonthClosingRoutes = require('./routes/MonthClosingRoutes')
 
 app.use(express.json())
 
+app.use(cors())
+
 // config routes
 
 app.use('/family', FamilyRoutes)

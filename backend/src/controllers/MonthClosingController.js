@@ -67,6 +67,10 @@ module.exports = class MonthClosingController{
             })
 
         } catch (err) {
+            if(err.name === 'SequelizeUniqueConstraintError'){
+                return res.status(409).json({message: "Este mês já está fechado!"})
+            }
+
             console.log(err)
             return res.status(500).json({message: "Não foi possível completar a solicitação"})
         }

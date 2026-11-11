@@ -19,8 +19,8 @@ module.exports = class BillController{
             return res.status(422).json({message: "Insira um valor válido!"})
         }
 
-        if(isNaN(Date.parse(dueDate))){
-            return res.status(422).json({message: "Insira uma data válida!"})
+        if(isNaN(Date.parse(dueDate)) || !/^\d{4}-\d{2}-\d{2}$/.test(dueDate)){
+            return res.status(422).json({message: "Insira uma data válida! (YYYY-MM-DD)"})
         }
 
         if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(referenceMonth)){
