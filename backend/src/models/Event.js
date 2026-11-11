@@ -6,15 +6,15 @@ const Event = sequelize.define('Event', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    descritpion: {
+    description: {
         type: DataTypes.TEXT,
     },
-    startData: {
+    startDate: {
         type: DataTypes.DATE,
         allowNull: false
     },
-    deadLine: {
-        type: DataTypes.DATEONLY
+    endDate: {
+        type: DataTypes.DATE,
     },
     allDay: {
         type: DataTypes.BOOLEAN,
