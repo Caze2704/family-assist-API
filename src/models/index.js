@@ -5,7 +5,7 @@ const User = require('./User')
 const Task = require('./Task')
 const Event = require('./Event')
 const Bill = require('./Bill')
-const MonthClosing = require('./monthClosing')
+const MonthClosing = require('./MonthClosing')
 
 Family.hasMany(User, { foreignKey: 'FamilyId' })
 User.belongsTo(Family, { foreignKey: 'FamilyId' })

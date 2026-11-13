@@ -8,7 +8,7 @@ async function start() {
         await sequelize.authenticate()
         console.log("Banco conectado")
 
-        sequelize.sync()
+        sequelize.sync({alter: true})
         console.log("tabelas conectadas")
 
         app.listen(port, () => console.log("Servidor on"))
