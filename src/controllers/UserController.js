@@ -31,7 +31,13 @@ module.exports = class UserController{
             return res.status(200).json({
                 message: "Você está autenticado!",
                 token,
-                familyId: user.FamilyId
+                familyId: user.FamilyId,
+                user: {
+                    id: user.id,
+                    nome: user.name,
+                    cargo: user.memberStatus,
+                    email: user.email
+                }
             })
         } catch (err) {
             console.log(err)
