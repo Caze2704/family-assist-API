@@ -58,7 +58,7 @@ O sistema implementa controle de acesso baseado em papéis (**RBAC - Role-Based 
 * **Tarefas (`/task`)**: Criação e acompanhamento de tarefas domésticas.
 * **Finanças (`/bill`)**: Controle de contas e despesas da casa.
 * **Eventos (`/event`)**: Gestão do calendário e compromissos da família.
-* **Fechamento de Mês (`/month-closing`)**: Resumos e auditoria financeira mensal.
+* **Fechamento de Mês (`/month`)**: Resumos e auditoria financeira mensal.
 
 ---
 
